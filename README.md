@@ -20,11 +20,11 @@ Please also include appropriate tests for your code (see below for more details)
 
 For testing, we recommend using rspec. An initial setup has already been included in the project though you are not required to use this setup. To use the provided setup:
 
-1. gem install bundler installs bundler.
-2. bundle install installs rspec and other dependencies.
-3. bundle exec rspec run all tests in the spec/ directory.
+1. `gem install bundler` installs bundler.
+2. `bundle install` installs rspec and other dependencies.
+3. `bundle exec rspec` run all tests in the `spec/` directory.
 
-All of your tests should be added under the spec/ directory. There are lots of online resources for writing tests in rspec. Feel free to look at any of them. https://blog.teamtreehouse.com/an-introduction-to-rspec seems like a decent one to start with.
+All of your tests should be added under the `spec/` directory. There are lots of online resources for writing tests in rspec. Feel free to look at any of them. [this](https://blog.teamtreehouse.com/an-introduction-to-rspec) seems like a decent one to start with.
 
 # Submission
 
