@@ -2,7 +2,7 @@
 
 Please implement a game of tic-tac-toe in Ruby 2.3.0 or higher. Your game should be played on a 4x4 board. However, please structure your code so that it's easy to change the size of your board (by changing a few lines of source code).
 
-Your game needs to provide a computer player, who will always go first. This computer player must implement at least 2 different strategies (for example, random walk and minimax) and play reasonably well against its human opponent. At the beginning of the game, please prompt human player to select one of the implemented strategies. The player who first succeeds in placing three consecutive marks in a horizontal, vertical, or diagonal row wins the game.
+Your game needs to provide a computer player, who will always go first. This computer player must implement at least 2 different strategies (for example, random walk and minimax) and play reasonably well against its human opponent (AI should always win on smaller boards, and changing board size shouldn't affect win rate - though it's ok for AI to take a long time on larger boards). At the beginning of the game, please prompt human player to select one of the implemented strategies. The player who first succeeds in placing three consecutive marks in a horizontal, vertical, or diagonal row wins the game.
 
 We expect your game to be executed in the terminal (command line interface). The simplest representation of the game board and communication to prompt human player for moves should be sufficient.
 
