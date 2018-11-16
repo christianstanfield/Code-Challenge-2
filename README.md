@@ -1,8 +1,10 @@
 # Requirements
 
-Please implement a game of tic-tac-toe in Ruby 2.3.0 or higher. Your game should be played on a 4x4 board. However, please structure your code so that it's easy to change the size of your board (by changing a few lines of source code).
+Please implement a game of tic-tac-toe in Ruby 2.3.0 or higher. Your game should be played on a 4x4 board. However, please structure your code so that it's easy to change the size of your board (it should be obvious to me how to change the size of your board by changing a few lines of your source code).
 
-Your game needs to provide a computer player, who will always go first. This computer player must implement at least 2 different strategies (for example, random walk and minimax) and play reasonably well against its human opponent (AI should always win on smaller boards, and changing board size shouldn't affect win rate - though it's ok for AI to take a long time on larger boards). At the beginning of the game, please prompt human player to select one of the implemented strategies. The player who first succeeds in placing three consecutive marks in a horizontal, vertical, or diagonal row wins the game.
+Your game needs to provide a computer player, who will always go first. This computer player must implement at least 2 different strategies (for example, random walk and minimax). At least one of your implemented strategies must play reasonably well against its human opponent, which means AI should never lose on smaller boards, and changing board size shouldn't affect loss rate. It's ok, however, for your AI to take a long time on larger boards.
+
+At the beginning of the game, please prompt human player to select one of the implemented strategies. The player who first succeeds in placing three consecutive marks in a horizontal, vertical, or diagonal row wins the game.
 
 We expect your game to be executed in the terminal (command line interface). The simplest representation of the game board and communication to prompt human player for moves should be sufficient.
 
@@ -14,7 +16,7 @@ Please also include appropriate tests for your code (see below for more details)
 
 * Feel free to make assumptions about anything that's not stated above - but please state your assumptions in a project read-me.
 * Design carefully but please refrain from over-engineering. A simple solution is often a good solution.
-* You can use any algorithm and/or heuristic functions for your computer player.
+* You can use any algorithm and/or heuristic functions for your computer player. If you are unsure, we recommend starting with a strategy that makes random moves before adding a second strategy that implements Minimax.
 
 # Testing
 
