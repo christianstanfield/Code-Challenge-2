@@ -26,6 +26,41 @@ class ConnectFour
   private
 
   def play_game
+    loop do
+      opponent_column = opponent.select_column board.width
+      until board.update_state opponent_column, opponent.game_piece
+        opponent_column = opponent.select_column board.width
+      end
+
+      view.print_board board.get_current_state
+
+      if winner = board.winning_player(players)
+        view.print_winner winner
+        break
+      end
+
+      if board.full?
+        view.print_game_draw
+        break
+      end
+
+      player_column = view.request_column_choice board.width
+      until board.update_state player_column, player.game_piece
+        player_column = view.request_column_choice board.width
+      end
+
+      if winner = board.winning_player(players)
+        view.print_board board.get_current_state
+        view.print_winner winner
+        break
+      end
+
+      if board.full?
+        view.print_board board.get_current_state
+        view.print_game_draw
+        break
+      end
+    end
   end
 
   def setup_game

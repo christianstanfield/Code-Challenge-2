@@ -4,6 +4,10 @@ class AiPlayer < Player
 
   attr_reader :strategy
 
+  def select_column num_of_columns
+    (1..num_of_columns).to_a.sample
+  end
+
   def set_strategy strategy_choice
     if strategy_choice_valid? strategy_choice
       @strategy = available_strategies[strategy_choice - 1]

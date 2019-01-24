@@ -42,6 +42,42 @@ class View
     get_user_input.upcase
   end
 
+  def print_board board
+    reset_screen!
+
+    board.each.with_index do |row, row_index|
+      row.each.with_index do |game_piece, column_index|
+        game_piece ||= ' '
+        is_last_column = column_index == row.length - 1
+        is_last_column ? puts(" #{game_piece} ") : print(" #{game_piece} |")
+      end
+
+      unless is_last_row = row_index == board.length - 1
+        divider_length = 3 * row.length
+        divider_length += row.length - 1
+        puts '-' * divider_length
+      end
+    end
+  end
+
+  def request_column_choice num_of_columns
+    puts ''
+    print "Select a column (1 - #{num_of_columns}): "
+    get_user_input.to_i
+  end
+
+  def print_winner winner
+    puts ''
+    puts "#{winner} wins"
+    puts ''
+  end
+
+  def print_game_draw
+    puts ''
+    puts 'Game draw'
+    puts ''
+  end
+
   def get_it_together
     puts ''
     puts '(╯°□°)╯︵ ┻━┻'
