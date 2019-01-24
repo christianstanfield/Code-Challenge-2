@@ -27,12 +27,11 @@ class ConnectFour
 
   def play_game
     loop do
-      opponent_column = opponent.select_column board.width
-      until board.update_state opponent_column, opponent.game_piece
-        opponent_column = opponent.select_column board.width
-      end
+      opponent_column = opponent.select_column board.available_columns
+      board.update_state opponent_column, opponent.game_piece
 
       view.print_board board.get_current_state
+      view.print_opponent_column opponent_column, opponent.game_piece
 
       if winner = board.winning_player(players)
         view.print_winner winner

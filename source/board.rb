@@ -36,6 +36,17 @@ class Board
     get_current_state.flatten.compact.length == get_current_state.flatten.length
   end
 
+  def available_columns
+    top_row = get_current_state.first
+    empty_columns = []
+
+    top_row.each.with_index do |column, index|
+      empty_columns << index + 1 if column.nil?
+    end
+
+    empty_columns
+  end
+
   def winning_player players
     if winner = find_winning_row(players)
       winner
@@ -141,17 +152,7 @@ class Board
   end
 
   def column_choice_valid? column_choice
-    column_choice_in_valid_range?(column_choice) && column_not_full?(column_choice)
-  end
-
-  def column_choice_in_valid_range? column_choice
-    column_choice > 0 && column_choice <= width
-  end
-
-  def column_not_full? column_choice
-    column_index = column_choice - 1
-    column = get_column column_index
-    column.compact.length < height
+    available_columns.include? column_choice
   end
 
   def initial_board_state

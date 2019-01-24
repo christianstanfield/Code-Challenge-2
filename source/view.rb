@@ -60,6 +60,11 @@ class View
     end
   end
 
+  def print_opponent_column column, game_piece
+    puts ''
+    puts "#{game_piece} chose #{column}"
+  end
+
   def request_column_choice num_of_columns
     puts ''
     print "Select a column (1 - #{num_of_columns}): "

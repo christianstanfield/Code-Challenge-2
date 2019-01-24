@@ -190,4 +190,19 @@ describe Board do
       end
     end
   end
+
+  describe '#available_columns' do
+    let(:dimensions) { { width: 7, height: 2, winning_number: 3 } }
+    before(:each) do
+      allow(board).to receive(:initial_board_state).and_return(
+        [ ['O', nil, 'O', nil, 'X', nil, 'O'],
+          ['X', nil, 'X', 'O', 'O', 'O', nil]
+        ]
+      )
+    end
+
+    it 'should return the numbers of nil columns on the top row starting from 1' do
+      expect(board.available_columns).to eq([2,4,6])
+    end
+  end
 end
