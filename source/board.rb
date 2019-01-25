@@ -1,15 +1,12 @@
 class Board
 
-  attr_reader :width, :height, :winning_number
+  attr_reader :width, :height, :winning_number, :current_state
 
   def initialize dimensions
     @width          = dimensions[:width]
     @height         = dimensions[:height]
     @winning_number = dimensions[:winning_number]
-  end
-
-  def get_current_state
-    @board_state ||= initial_board_state
+    @current_state  = dimensions[:state] || initial_board_state
   end
 
   def update_state column_choice, game_piece
@@ -33,11 +30,11 @@ class Board
   end
 
   def full?
-    get_current_state.flatten.compact.length == get_current_state.flatten.length
+    current_state.flatten.compact.length == current_state.flatten.length
   end
 
   def available_columns
-    top_row = get_current_state.first
+    top_row = current_state.first
     empty_columns = []
 
     top_row.each.with_index do |column, index|
@@ -61,14 +58,23 @@ class Board
     dimensions_valid? && winning_number_valid?
   end
 
+  def duplicate
+    self.class.new(
+      width: width,
+      height: height,
+      winning_number: winning_number,
+      state: current_state.dup.map(&:dup)
+    )
+  end
+
   private
 
   def find_winning_row players
-    find_winning_player get_current_state, players
+    find_winning_player current_state, players
   end
 
   def find_winning_column players
-    find_winning_player get_current_state.transpose, players
+    find_winning_player current_state.transpose, players
   end
 
   def find_winning_diagonal players
@@ -91,7 +97,7 @@ class Board
         diagonal = []
 
         winning_number.times do |diagonal_index|
-          diagonal << get_current_state[row_index + diagonal_index][column_index + diagonal_index]
+          diagonal << current_state[row_index + diagonal_index][column_index + diagonal_index]
         end
 
         diagonals << diagonal
@@ -109,7 +115,7 @@ class Board
       diagonal = []
 
         winning_number.times do |diagonal_index|
-          diagonal << get_current_state[row_index + diagonal_index][column_index - diagonal_index]
+          diagonal << current_state[row_index + diagonal_index][column_index - diagonal_index]
         end
 
         diagonals << diagonal
@@ -144,11 +150,11 @@ class Board
   end
 
   def set_state row, column, game_piece
-    @board_state[row][column] = game_piece
+    @current_state[row][column] = game_piece
   end
 
   def get_column index
-    get_current_state.transpose[index]
+    current_state.transpose[index]
   end
 
   def column_choice_valid? column_choice

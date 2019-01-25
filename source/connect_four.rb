@@ -30,7 +30,7 @@ class ConnectFour
       opponent_column = opponent.select_column board.available_columns
       board.update_state opponent_column, opponent.game_piece
 
-      view.print_board board.get_current_state
+      view.print_board board.current_state
       view.print_opponent_column opponent_column, opponent.game_piece
 
       if winner = board.winning_player(players)
@@ -49,13 +49,13 @@ class ConnectFour
       end
 
       if winner = board.winning_player(players)
-        view.print_board board.get_current_state
+        view.print_board board.current_state
         view.print_winner winner
         break
       end
 
       if board.full?
-        view.print_board board.get_current_state
+        view.print_board board.current_state
         view.print_game_draw
         break
       end
