@@ -4,17 +4,7 @@ describe Board do
   let(:board) { described_class.new dimensions }
 
   describe '#winning_player' do
-    let(:player) do
-      human_player = HumanPlayer.new
-      human_player.game_piece = 'X'
-      human_player
-    end
-    let(:opponent) do
-      ai_player = AiPlayer.new
-      ai_player.game_piece = 'O'
-      ai_player
-    end
-    let(:players) { [player, opponent] }
+    let(:game_pieces) { ConnectFour.new.send :valid_game_pieces }
 
     context 'when a row contains winning_number of consecutive pieces' do
       let(:board_state) do
@@ -24,7 +14,7 @@ describe Board do
       let(:dimensions) { { width: 7, height: 2, winning_number: 3, state: board_state } }
 
       it 'should return winning game_piece' do
-        expect(board.winning_player(players)).to eq('O')
+        expect(board.winning_player(game_pieces)).to eq('O')
       end
     end
 
@@ -40,18 +30,18 @@ describe Board do
       end
       let(:dimensions) { { width: 2, height: 7, winning_number: 3, state: board_state } }
       before(:each) do
-        expect(board.send(:find_winning_row, players)).to eq(nil)
+        expect(board.send(:find_winning_row, game_pieces)).to eq(nil)
       end
 
       it 'should return winning game_piece' do
-        expect(board.winning_player(players)).to eq('O')
+        expect(board.winning_player(game_pieces)).to eq('O')
       end
     end
 
     context 'when a diagonal contains winning_number of consecutive pieces' do
       before(:each) do
-        expect(board.send(:find_winning_row, players)).to eq(nil)
-        expect(board.send(:find_winning_column, players)).to eq(nil)
+        expect(board.send(:find_winning_row, game_pieces)).to eq(nil)
+        expect(board.send(:find_winning_column, game_pieces)).to eq(nil)
       end
 
       context 'when diagonal starts in top row' do
@@ -67,7 +57,7 @@ describe Board do
         let(:dimensions) { { width: 3, height: 7, winning_number: 3, state: board_state } }
 
         it 'should return winning game_piece' do
-          expect(board.winning_player(players)).to eq('X')
+          expect(board.winning_player(game_pieces)).to eq('X')
         end
       end
 
@@ -84,7 +74,7 @@ describe Board do
         let(:dimensions) { { width: 3, height: 7, winning_number: 3, state: board_state } }
 
         it 'should return winning game_piece' do
-          expect(board.winning_player(players)).to eq('O')
+          expect(board.winning_player(game_pieces)).to eq('O')
         end
       end
 
@@ -101,7 +91,7 @@ describe Board do
         let(:dimensions) { { width: 3, height: 7, winning_number: 3, state: board_state } }
 
         it 'should return winning game_piece' do
-          expect(board.winning_player(players)).to eq('O')
+          expect(board.winning_player(game_pieces)).to eq('O')
         end
       end
 
@@ -118,7 +108,7 @@ describe Board do
         let(:dimensions) { { width: 4, height: 7, winning_number: 3, state: board_state } }
 
         it 'should return winning game_piece' do
-          expect(board.winning_player(players)).to eq('O')
+          expect(board.winning_player(game_pieces)).to eq('O')
         end
       end
     end
@@ -138,7 +128,7 @@ describe Board do
         let(:dimensions) { { width: 5, height: 7, winning_number: 4, state: board_state } }
 
         it 'should return nil' do
-          expect(board.winning_player(players)).to eq(nil)
+          expect(board.winning_player(game_pieces)).to eq(nil)
         end
       end
 
@@ -155,7 +145,7 @@ describe Board do
         let(:dimensions) { { width: 5, height: 7, winning_number: 4, state: board_state } }
 
         it 'should return nil' do
-          expect(board.winning_player(players)).to eq(nil)
+          expect(board.winning_player(game_pieces)).to eq(nil)
         end
       end
     end

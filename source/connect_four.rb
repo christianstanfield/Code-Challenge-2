@@ -6,13 +6,12 @@ require_relative 'board'
 class ConnectFour
   GAME_OVER = 'game over'.freeze
 
-  attr_reader :view, :player, :opponent, :players, :board
+  attr_reader :view, :player, :opponent, :board
 
   def initialize
     @view     = View.new
     @player   = HumanPlayer.new
     @opponent = AiPlayer.new
-    @players  = [opponent, player]
   end
 
   def run
@@ -27,13 +26,13 @@ class ConnectFour
 
   def play_game
     loop do
-      opponent_column = opponent.select_column board, players
+      opponent_column = opponent.select_column board, valid_game_pieces
       board.update_state opponent_column, opponent.game_piece
 
       view.print_board board.current_state
       view.print_opponent_column opponent_column, opponent.game_piece
 
-      if winner = board.winning_player(players)
+      if winner = board.winning_player(valid_game_pieces)
         view.print_winner winner
         break
       end
@@ -48,7 +47,7 @@ class ConnectFour
         player_column = view.request_column_choice board.width
       end
 
-      if winner = board.winning_player(players)
+      if winner = board.winning_player(valid_game_pieces)
         view.print_board board.current_state
         view.print_winner winner
         break

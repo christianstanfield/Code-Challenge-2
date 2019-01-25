@@ -4,11 +4,11 @@ class AiPlayer < Player
 
   attr_reader :strategy
 
-  def select_column board, players
+  def select_column board, game_pieces
     if strategy_random?
       board.available_columns.sample
     elsif strategy_minimax?
-      weigh_outcomes board, players
+      weigh_outcomes board, game_pieces
     end
   end
 
@@ -28,32 +28,43 @@ class AiPlayer < Player
 
   private
 
-  def weigh_outcomes board, players
+  def weigh_outcomes board, game_pieces
     outcomes     = board.available_columns.map { |column| [column, 0] }.to_h
-    filthy_human = players.find { |player| player.game_piece != game_piece }
+    filthy_human = game_pieces.find { |piece| piece != game_piece }
 
     board.available_columns.each do |column|
       test_board = board.duplicate
       test_board.update_state column, game_piece
 
-      if test_board.winning_player players
-        outcomes[column] = 1
+      if test_board.winning_player game_pieces
+        outcomes[column] = 2
       else
         test_board.available_columns.each do |next_column|
           next_level_test_board = test_board.duplicate
-          next_level_test_board.update_state next_column, filthy_human.game_piece
+          next_level_test_board.update_state next_column, filthy_human
 
-          if next_level_test_board.winning_player players
+          if next_level_test_board.winning_player game_pieces
             outcomes[column] = -1
+          end
+        end
+
+        if outcomes[column] == 0
+          test_board.available_columns.each do |next_column|
+            next_level_test_board = test_board.duplicate
+            next_level_test_board.update_state next_column, game_piece
+
+            if next_level_test_board.winning_player game_pieces
+              outcomes[column] = 1
+            end
           end
         end
       end
     end
 
-    pick_best_outcome outcomes
+    find_best_outcome outcomes
   end
 
-  def pick_best_outcome outcomes
+  def find_best_outcome outcomes
     best_outcome = outcomes.values.max
     outcomes.key best_outcome
   end

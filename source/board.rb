@@ -44,12 +44,12 @@ class Board
     empty_columns
   end
 
-  def winning_player players
-    if winner = find_winning_row(players)
+  def winning_player game_pieces
+    if winner = find_winning_row(game_pieces)
       winner
-    elsif winner = find_winning_column(players)
+    elsif winner = find_winning_column(game_pieces)
       winner
-    elsif winner = find_winning_diagonal(players)
+    elsif winner = find_winning_diagonal(game_pieces)
       winner
     end
   end
@@ -69,23 +69,23 @@ class Board
 
   private
 
-  def find_winning_row players
-    find_winning_player current_state, players
+  def find_winning_row game_pieces
+    find_winning_player current_state, game_pieces
   end
 
-  def find_winning_column players
-    find_winning_player current_state.transpose, players
+  def find_winning_column game_pieces
+    find_winning_player current_state.transpose, game_pieces
   end
 
-  def find_winning_diagonal players
+  def find_winning_diagonal game_pieces
     possible_winning_rows_moving_down = (0..height - winning_number).to_a
 
     diagonals = search_diagonals_moving_forward possible_winning_rows_moving_down
-    winner = find_winning_player diagonals, players
+    winner = find_winning_player diagonals, game_pieces
     return winner if winner
 
     diagonals = search_diagonals_moving_backwards possible_winning_rows_moving_down
-    find_winning_player diagonals, players
+    find_winning_player diagonals, game_pieces
   end
 
   def search_diagonals_moving_forward row_indexs
@@ -124,9 +124,9 @@ class Board
     diagonals
   end
 
-  def find_winning_player board_state, players
+  def find_winning_player board_state, game_pieces
     board_state.each do |row|
-      player_pieces = players.map { |player| [player.game_piece, []] }.to_h
+      player_pieces = game_pieces.map { |game_piece| [game_piece, []] }.to_h
       previous_played_piece = nil
 
       row.each do |game_piece|
