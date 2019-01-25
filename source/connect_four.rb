@@ -27,7 +27,7 @@ class ConnectFour
 
   def play_game
     loop do
-      opponent_column = opponent.select_column board.available_columns
+      opponent_column = opponent.select_column board, players
       board.update_state opponent_column, opponent.game_piece
 
       view.print_board board.current_state
